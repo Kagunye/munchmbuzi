@@ -5,9 +5,16 @@
 #   staticfiles_build/media/   -> /media/    (branch, dish and news images, branch reels)
 set -euo pipefail
 
-PY="$(command -v python3.12 || command -v python3)"
-echo "Using $($PY --version)"
-$PY -m pip install --disable-pip-version-check -r requirements.txt
+SYS_PY="$(command -v python3.12 || command -v python3)"
+echo "Using $($SYS_PY --version)"
+
+# Vercel's build Python is "externally managed" (PEP 668), so install the
+# packages into a throwaway virtualenv outside the project folder.
+VENV="${TMPDIR:-/tmp}/mbuzimunch-build-venv"
+$SYS_PY -m venv "$VENV"
+PY="$VENV/bin/python"
+[ -x "$PY" ] || PY="$VENV/Scripts/python.exe"   # Windows layout, for testing locally
+$PY -m pip install --quiet --disable-pip-version-check -r requirements.txt
 
 if [ -n "${DATABASE_URL:-}" ]; then
   echo "Applying database migrations and loading content..."
