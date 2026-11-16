@@ -235,13 +235,12 @@
     hasTrack: !!root.dataset.src,
   };
 
-  /* Phone bottom-bar music button */
-  document.querySelectorAll(".action-bar__music").forEach((b) => {
+  /* Music switch in the phone slide-out menu */
+  document.querySelectorAll(".nav__music").forEach((b) => {
     b.addEventListener("click", () => window.mmMusic.toggle());
     window.mmMusic.onChange((on) => {
       b.setAttribute("aria-pressed", String(on));
-      b.setAttribute("aria-label", on ? "Pause music" : "Play music");
-      b.querySelector("span").textContent = on ? "Pause" : "Music";
+      b.querySelector(".nav__music-label").textContent = on ? "Pause music" : "Play music";
     });
   });
 

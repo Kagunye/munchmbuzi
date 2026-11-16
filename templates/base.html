@@ -90,6 +90,11 @@
           <span class="vintage-toggle__label">Vintage mode</span>
           <span class="vintage-toggle__switch" aria-hidden="true"></span>
         </button>
+        <button type="button" class="nav__music" data-music-control aria-pressed="false">
+          <svg class="ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15L20 12z"/></svg>
+          <svg class="ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
+          <span class="nav__music-label">Play music</span>
+        </button>
       </nav>
     </div>
   </header>
@@ -142,19 +147,6 @@
       <span>Follow · Like · Share · <a href="https://www.instagram.com/mbuzi_munch/" target="_blank" rel="noopener">@mbuzi_munch</a></span>
     </div>
   </footer>
-
-  {# Phone app tab bar #}
-  <nav class="action-bar" aria-label="App navigation">
-    <a href="{% url 'core:home' %}" class="{% if url_name == 'home' %}is-active{% endif %}"{% if url_name == 'home' %} aria-current="page"{% endif %}><svg><use href="#i-home"/></svg><span>Home</span></a>
-    <a href="{% url 'core:menu' %}" class="{% if url_name == 'menu' %}is-active{% endif %}"{% if url_name == 'menu' %} aria-current="page"{% endif %}><svg><use href="#i-book"/></svg><span>Menu</span></a>
-    <a href="{% url 'core:book' %}" class="action-bar__book{% if url_name == 'book' or url_name == 'book_thanks' %} is-active{% endif %}"{% if url_name == 'book' %} aria-current="page"{% endif %}><span class="action-bar__fab"><svg><use href="#i-calendar"/></svg></span><span>Book</span></a>
-    <a href="{% url 'core:branches' %}" class="{% if url_name == 'branches' %}is-active{% endif %}"{% if url_name == 'branches' %} aria-current="page"{% endif %}><svg><use href="#i-pin"/></svg><span>Branches</span></a>
-    <button type="button" class="action-bar__music" data-music-control aria-pressed="false" aria-label="Play music">
-      <svg class="ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15L20 12z"/></svg>
-      <svg class="ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
-      <span>Music</span>
-    </button>
-  </nav>
 
   {% include "partials/music.html" %}
 
