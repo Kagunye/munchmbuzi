@@ -19,8 +19,12 @@ def env_list(name, default=""):
     return [item.strip() for item in os.environ.get(name, default).split(",") if item.strip()]
 
 
-# Vercel sets VERCEL=1 in its build and runtime environments.
-ON_VERCEL = bool(os.environ.get("VERCEL"))
+# Running on Vercel? VERCEL=1 isn't always present inside the serverless function,
+# so also look at the other variables Vercel / AWS Lambda set at runtime.
+ON_VERCEL = any(
+    os.environ.get(name)
+    for name in ("VERCEL", "VERCEL_ENV", "VERCEL_URL", "AWS_LAMBDA_FUNCTION_NAME", "LAMBDA_TASK_ROOT")
+)
 
 SECRET_KEY = os.environ.get(
     "DJANGO_SECRET_KEY",
@@ -30,8 +34,14 @@ DEBUG = env_bool("DJANGO_DEBUG", not ON_VERCEL)
 ALLOWED_HOSTS = env_list("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1,[::1]")
 CSRF_TRUSTED_ORIGINS = env_list("DJANGO_CSRF_TRUSTED_ORIGINS")
 if ON_VERCEL:
-    ALLOWED_HOSTS += [".vercel.app"]
-    CSRF_TRUSTED_ORIGINS += ["https://*.vercel.app"]
+    vercel_hosts = ["munchmbuzi.vercel.app", ".vercel.app"] + [
+        os.environ[name] for name in ("VERCEL_URL", "VERCEL_BRANCH_URL", "VERCEL_PROJECT_PRODUCTION_URL")
+        if os.environ.get(name)
+    ]
+    ALLOWED_HOSTS += vercel_hosts
+    CSRF_TRUSTED_ORIGINS += ["https://munchmbuzi.vercel.app", "https://*.vercel.app"] + [
+        f"https://{h}" for h in vercel_hosts if not h.startswith(".") and h != "munchmbuzi.vercel.app"
+    ]
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -90,6 +100,25 @@ else:
             "NAME": BASE_DIR / "db.sqlite3",
         }
     }
+    if ON_VERCEL:
+        import sys
+
+        print(
+            "ERROR: DATABASE_URL is not set. Add a Postgres database in Vercel "
+            "(Project > Storage), then redeploy so the tables are created.",
+            file=sys.stderr,
+        )
+
+# Send errors (with full tracebacks) to stdout/stderr so they appear in Vercel's logs.
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {"console": {"class": "logging.StreamHandler"}},
+    "root": {"handlers": ["console"], "level": "WARNING"},
+    "loggers": {
+        "django.request": {"handlers": ["console"], "level": "ERROR", "propagate": False},
+    },
+}
 
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
