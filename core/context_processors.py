@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 from django.utils import timezone
@@ -25,13 +26,29 @@ DELIVERY_PARTNERS = [
 ASSET_FILES = ("css/site.css", "js/site.js", "js/music.js", "js/experience.js")
 
 
+_version_cache = {}
+
+
 def asset_version():
-    """Changes whenever the site's CSS/JS changes, so browsers never run stale copies."""
+    """A short hash of the site's CSS/JS contents, used as ?v= on their URLs.
+    It changes whenever those files change, so browsers never keep a stale copy.
+    (Content, not timestamps: deployment bundles don't keep real file times.)"""
+    import hashlib
+
     from django.conf import settings
 
     base = Path(settings.BASE_DIR) / "static"
-    stamps = [int((base / f).stat().st_mtime) for f in ASSET_FILES if (base / f).exists()]
-    return str(max(stamps)) if stamps else "1"
+    files = [base / f for f in ASSET_FILES if (base / f).exists()]
+    key = tuple((str(f), f.stat().st_mtime_ns, f.stat().st_size) for f in files)
+    if key not in _version_cache:
+        digest = hashlib.sha1()
+        for f in files:
+            digest.update(f.read_bytes())
+        # last resort on a host without the files: the deployed commit
+        fallback = os.environ.get("VERCEL_GIT_COMMIT_SHA", "1")[:10]
+        _version_cache.clear()
+        _version_cache[key] = digest.hexdigest()[:10] if files else fallback
+    return _version_cache[key]
 
 
 def site(request):
