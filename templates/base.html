@@ -5,7 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>{% block title %}Mbuzi Munch | Kenya's Finest Nyama Choma · Nairobi & Naivasha{% endblock %}</title>
   <meta name="description" content="{% block description %}Flame-grilled free-range mbuzi, kuku, T-bone and Lake Victoria tilapia. Mbuzi Munch restaurants at Golf Park Ngong Racecourse, Galleria Mall, Buffalo Mall Naivasha and Delamere Naivasha.{% endblock %}">
-  <meta name="theme-color" content="#ff2626">
+  <meta name="theme-color" content="#0f0e0d">
+  {# Installable as a phone app ("Add to Home Screen") #}
+  <link rel="manifest" href="{% static 'manifest.webmanifest' %}">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Mbuzi Munch">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
   {# Apply the visitor's saved look before first paint (clean by default, vintage if they switched it on) #}
   <script>try{if(localStorage.getItem("mm-vintage")==="on")document.documentElement.classList.add("vintage")}catch(e){}</script>
   <link rel="canonical" href="{{ request.build_absolute_uri }}">
@@ -78,6 +84,12 @@
         <a href="{% url 'core:news' %}" class="{% if url_name == 'news' or url_name == 'post_detail' %}is-active{% endif %}">News</a>
         <a href="{% url 'core:careers' %}" class="{% if url_name == 'careers' %}is-active{% endif %}">Careers</a>
         <a href="{% url 'core:book' %}" class="btn btn--sm"><svg><use href="#i-calendar"/></svg> Book a table</a>
+        {# shown in the phone slide-out menu (the red top bar is hidden on phones) #}
+        <button type="button" class="vintage-toggle nav__vintage" aria-pressed="false" data-vintage-toggle>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="20" height="14" rx="2"/><circle cx="12" cy="13" r="4"/><path d="M7 6l2-3h6l2 3"/></svg>
+          <span class="vintage-toggle__label">Vintage mode</span>
+          <span class="vintage-toggle__switch" aria-hidden="true"></span>
+        </button>
       </nav>
     </div>
   </header>
@@ -131,10 +143,17 @@
     </div>
   </footer>
 
-  <nav class="action-bar" aria-label="Quick actions">
-    <a href="tel:+254723868686"><svg><use href="#i-phone"/></svg>Call</a>
-    <a href="{% url 'core:book' %}" class="primary"><svg><use href="#i-calendar"/></svg>Book</a>
-    <a href="{% url 'core:menu' %}"><svg><use href="#i-book"/></svg>Menu</a>
+  {# Phone app tab bar #}
+  <nav class="action-bar" aria-label="App navigation">
+    <a href="{% url 'core:home' %}" class="{% if url_name == 'home' %}is-active{% endif %}"{% if url_name == 'home' %} aria-current="page"{% endif %}><svg><use href="#i-home"/></svg><span>Home</span></a>
+    <a href="{% url 'core:menu' %}" class="{% if url_name == 'menu' %}is-active{% endif %}"{% if url_name == 'menu' %} aria-current="page"{% endif %}><svg><use href="#i-book"/></svg><span>Menu</span></a>
+    <a href="{% url 'core:book' %}" class="action-bar__book{% if url_name == 'book' or url_name == 'book_thanks' %} is-active{% endif %}"{% if url_name == 'book' %} aria-current="page"{% endif %}><span class="action-bar__fab"><svg><use href="#i-calendar"/></svg></span><span>Book</span></a>
+    <a href="{% url 'core:branches' %}" class="{% if url_name == 'branches' %}is-active{% endif %}"{% if url_name == 'branches' %} aria-current="page"{% endif %}><svg><use href="#i-pin"/></svg><span>Branches</span></a>
+    <button type="button" class="action-bar__music" data-music-control aria-pressed="false" aria-label="Play music">
+      <svg class="ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15L20 12z"/></svg>
+      <svg class="ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
+      <span>Music</span>
+    </button>
   </nav>
 
   {% include "partials/music.html" %}

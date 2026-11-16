@@ -5,8 +5,12 @@ Values that differ between development and production are read from
 environment variables (see README.md and .env.example).
 """
 
+import mimetypes
 import os
 from pathlib import Path
+
+# so the dev server sends the web-app manifest with the right type
+mimetypes.add_type("application/manifest+json", ".webmanifest")
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 

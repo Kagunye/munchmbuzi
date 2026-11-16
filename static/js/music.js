@@ -235,6 +235,16 @@
     hasTrack: !!root.dataset.src,
   };
 
+  /* Phone bottom-bar music button */
+  document.querySelectorAll(".action-bar__music").forEach((b) => {
+    b.addEventListener("click", () => window.mmMusic.toggle());
+    window.mmMusic.onChange((on) => {
+      b.setAttribute("aria-pressed", String(on));
+      b.setAttribute("aria-label", on ? "Pause music" : "Play music");
+      b.querySelector("span").textContent = on ? "Pause" : "Music";
+    });
+  });
+
   /* Hero pennant player */
   const pennant = document.querySelector(".pennant");
   if (pennant) {

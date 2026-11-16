@@ -1,0 +1,22 @@
+{
+  "name": "Mbuzi Munch – Kenya's Finest Nyama Choma",
+  "short_name": "Mbuzi Munch",
+  "description": "Flame-grilled free-range mbuzi, kuku and tilapia. Menu, bookings and branches in Nairobi & Naivasha.",
+  "id": "/",
+  "start_url": "/?source=app",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0f0e0d",
+  "theme_color": "#0f0e0d",
+  "categories": ["food", "lifestyle"],
+  "icons": [
+    { "src": "/static/img/app/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/static/img/app/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/static/img/app/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Book a table", "url": "/book/", "icons": [{ "src": "/static/img/app/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Menu", "url": "/menu/", "icons": [{ "src": "/static/img/app/icon-192.png", "sizes": "192x192" }] }
+  ]
+}

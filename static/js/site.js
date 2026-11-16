@@ -13,6 +13,8 @@
       document.body.classList.toggle("nav-open", open);
       toggle.setAttribute("aria-expanded", String(open));
       toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+      const icon = toggle.querySelector("use");
+      if (icon) icon.setAttribute("href", open ? "#i-close" : "#i-menu");
     };
     toggle.addEventListener("click", () => setOpen(!nav.classList.contains("is-open")));
     $$("a", nav).forEach((a) => a.addEventListener("click", () => setOpen(false)));
@@ -50,7 +52,7 @@
   }
 
   /* Let the browser decode images off the main thread */
-  $$("img").forEach((img) => { img.decoding = "async"; });
+  $$("img[loading=lazy]").forEach((img) => { img.decoding = "async"; });  // not the logo / first screen
 
   /* Hero slideshow (slides after the first load their photo just before they show) */
   const loadSlide = (s) => { if (s && s.dataset.bg) { s.style.backgroundImage = `url('${s.dataset.bg}')`; delete s.dataset.bg; } };
