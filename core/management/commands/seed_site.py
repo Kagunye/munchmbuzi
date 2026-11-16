@@ -455,13 +455,16 @@ JOBS = [
 
 def attach_file(instance, field, src, filename):
     """Attach src to a File/ImageField. If media/ already holds that file (it is
-    committed to git for Vercel), point at it instead of saving a duplicate copy."""
-    if not src.exists():
-        return
+    committed to git for Vercel), point at it instead of saving a duplicate copy.
+
+    Inside a Vercel server function neither static/ nor media/ is bundled (both are
+    served by Vercel's CDN from the repo), so there we just point at the published name."""
     ff = getattr(instance, field)
-    target = ff.field.generate_filename(instance, filename)
-    if default_storage.exists(target):
-        ff.name = target.replace("\\", "/")  # always store URL-style paths
+    target = ff.field.generate_filename(instance, filename).replace("\\", "/")
+    if default_storage.exists(target) or (not src.exists() and getattr(settings, "ON_VERCEL", False)):
+        ff.name = target  # URL-style path of the file already in media/
+        return
+    if not src.exists():
         return
     with src.open("rb") as fh:
         ff.save(filename, File(fh), save=False)

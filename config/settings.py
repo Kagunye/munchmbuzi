@@ -101,11 +101,18 @@ else:
         }
     }
     if ON_VERCEL:
+        # No Postgres connected: run on a temporary SQLite file in /tmp (the only
+        # writable place) so the site still works. config/wsgi.py creates the tables
+        # and loads the content on start-up. Bookings made in this mode are LOST
+        # whenever Vercel recycles the server, so connect Postgres for real use.
         import sys
+        import tempfile
 
+        DATABASES["default"]["NAME"] = os.path.join(tempfile.gettempdir(), "mbuzimunch.sqlite3")
         print(
-            "ERROR: DATABASE_URL is not set. Add a Postgres database in Vercel "
-            "(Project > Storage), then redeploy so the tables are created.",
+            "WARNING: DATABASE_URL is not set, using a temporary database. Bookings and "
+            "job applications will NOT be kept. Add a Postgres database in Vercel "
+            "(Project > Storage) and redeploy.",
             file=sys.stderr,
         )
 
