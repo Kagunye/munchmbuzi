@@ -40,7 +40,21 @@
   window.addEventListener("scroll", markScroll, { passive: true });
   markScroll();
 
-  /* Hero slideshow */
+  /* Pause the endless sliding rows while they're off screen */
+  if ("IntersectionObserver" in window) {
+    const mio = new IntersectionObserver((entries) => entries.forEach((e) => {
+      e.target.querySelectorAll(".dish-marquee__track, .photo-slide__track, .marquee__track")
+        .forEach((t) => { t.style.animationPlayState = e.isIntersecting ? "" : "paused"; });
+    }), { rootMargin: "200px 0px" });
+    $$(".dish-marquee, .photo-slide, .marquee").forEach((el) => mio.observe(el));
+  }
+
+  /* Let the browser decode images off the main thread */
+  $$("img").forEach((img) => { img.decoding = "async"; });
+
+  /* Hero slideshow (slides after the first load their photo just before they show) */
+  const loadSlide = (s) => { if (s && s.dataset.bg) { s.style.backgroundImage = `url('${s.dataset.bg}')`; delete s.dataset.bg; } };
+  window.addEventListener("load", () => setTimeout(() => loadSlide($$(".hero__slide")[1]), 1500));
   const slides = $$(".hero__slide");
   const dots = $$(".hero__dots button");
   if (slides.length > 1) {
@@ -48,7 +62,9 @@
     const show = (n) => {
       slides[i].classList.remove("is-active"); dots[i] && dots[i].classList.remove("is-active");
       i = (n + slides.length) % slides.length;
+      loadSlide(slides[i]);
       slides[i].classList.add("is-active"); dots[i] && dots[i].classList.add("is-active");
+      loadSlide(slides[(i + 1) % slides.length]);  // fetch the next photo ahead of time
     };
     const start = () => { if (!reduceMotion) timer = setInterval(() => show(i + 1), 6000); };
     dots.forEach((d, n) => d.addEventListener("click", () => { clearInterval(timer); show(n); start(); }));
@@ -81,32 +97,66 @@
     vio.observe(vid);
   }
 
-  /* Instagram reels: load + play muted while on screen, tap for sound */
+  /* Instagram reels: only ONE plays at a time (the one most in view, or the one
+     you hover / turn the sound on for). A video file is only downloaded when its
+     reel is about to play, so a row of reels never loads and decodes all at once. */
   const reels = $$(".reel__video");
   if (reels.length) {
     const load = (v) => {
-      if (!v.dataset.loaded) { $$("source", v).forEach((s) => { s.src = s.dataset.src; }); v.load(); v.dataset.loaded = "1"; }
+      if (!v.dataset.loaded) {
+        $$("source", v).forEach((s) => { s.src = s.dataset.src; });
+        v.preload = "auto"; v.load(); v.dataset.loaded = "1";
+      }
     };
+    const ratios = new Map();
+    let chosen = null;   // reel picked by hover or sound; wins while it's on screen
+    let active = null;
+
+    const pickActive = () => {
+      // a hovered / sound-on reel plays while it's still (mostly) on screen;
+      // if visibility hasn't been reported yet, trust the user's action
+      if (chosen && (!ratios.has(chosen) || ratios.get(chosen) > 0.2)) return chosen;
+      let best = null, bestRatio = 0.45;
+      reels.forEach((v) => { const r = ratios.get(v) || 0; if (r > bestRatio) { best = v; bestRatio = r; } });
+      return best;
+    };
+    const update = () => {
+      const next = pickActive();
+      if (next === active) return;
+      if (active) active.pause();
+      active = next;
+      if (active && (!reduceMotion || active.dataset.user)) { load(active); active.play().catch(() => {}); }
+    };
+
     if ("IntersectionObserver" in window) {
       const rio = new IntersectionObserver((entries) => {
-        entries.forEach((e) => {
-          const v = e.target;
-          if (e.isIntersecting) { load(v); if (!reduceMotion || v.dataset.user) v.play().catch(() => {}); }
-          else v.pause();
-        });
-      }, { threshold: 0.45 });
+        entries.forEach((e) => ratios.set(e.target, e.isIntersecting ? e.intersectionRatio : 0));
+        update();
+      }, { threshold: [0, 0.2, 0.45, 0.7, 1] });
       reels.forEach((v) => rio.observe(v));
-    } else {
-      reels.forEach(load);
     }
+    // hovering (or focusing) a reel makes it the one that plays
+    reels.forEach((v) => {
+      const reel = v.closest(".reel");
+      const choose = () => { chosen = v; update(); };
+      reel.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") choose(); });
+      reel.addEventListener("focusin", choose);
+    });
+    // pause when the tab is hidden, resume when it's back
+    document.addEventListener("visibilitychange", () => {
+      if (!active) return;
+      if (document.hidden) active.pause(); else active.play().catch(() => {});
+    });
+
     $$(".reel__sound").forEach((btn) => btn.addEventListener("click", () => {
       const v = btn.closest(".reel").querySelector("video");
-      load(v);
       const turnOn = v.muted;
       reels.forEach((other) => { other.muted = true; });
       $$(".reel__sound").forEach((b) => { b.setAttribute("aria-pressed", "false"); b.setAttribute("aria-label", "Turn sound on"); });
       if (turnOn) {
-        v.muted = false; v.dataset.user = "1"; v.play().catch(() => {});
+        v.muted = false; v.dataset.user = "1";
+        chosen = v; update();  // make this the playing reel (pauses the previous one)
+        load(v); v.play().catch(() => {});
         btn.setAttribute("aria-pressed", "true"); btn.setAttribute("aria-label", "Mute");
         window.dispatchEvent(new CustomEvent("mm:reel-sound")); // pauses the site music
       }

@@ -1181,3 +1181,22 @@ html.is-scrolled .pennant { z-index: 40; }  /* once scrolling, it slides under t
 /* The banner's red overlay lives on ::before: make sure nothing shrinks or masks it */
 .banner::before { top: 0; right: 0; bottom: 0; left: 0; height: auto; -webkit-mask: none; mask: none; z-index: -2; }
 @media (max-width: 760px) { .banner::before { background: linear-gradient(180deg, rgba(200, 14, 14, .9) 0%, rgba(230, 20, 20, .82) 55%, rgba(255, 38, 38, .55) 100%); } }
+
+/* ---------- Default zoom: the whole site shows at 80% on tablets and desktops ---------- */
+/* (Phones stay at 100% so the text remains readable. Change 768px / .8 to adjust.) */
+@media (min-width: 768px) {
+  html { zoom: .8; }
+}
+
+/* ---------- Performance: smooth scrolling, no lag ---------- */
+/* no per-frame blur behind the sticky header (it's 96% opaque anyway) */
+.header::before { backdrop-filter: none; -webkit-backdrop-filter: none; }
+/* clean mode: no colour filter on photos/videos (filters cost GPU time on every frame) */
+html:not(.vintage) { --vtg-filter: none; --vtg-filter-soft: none; }
+html:not(.vintage) .hero__slide, html:not(.vintage) .page-hero__bg { filter: none; }
+/* moving rows run on the GPU compositor */
+.dish-marquee__track, .photo-slide__track, .marquee__track { will-change: transform; backface-visibility: hidden; }
+/* off-screen moving rows stop costing anything */
+.dish-marquee, .photo-slide, .marquee { contain: layout paint; }
+/* reels: only the playing one is a live video layer */
+.reel__video { background: #0f0e0d; }
