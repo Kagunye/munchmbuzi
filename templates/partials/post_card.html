@@ -1,0 +1,7 @@
+<a class="news-card reveal{% if p.image.name|slice:'-4:' == '.png' %} news-card--contain{% endif %}" href="{{ p.get_absolute_url }}">
+  {% if p.image %}<div class="news-card__img"><img src="{{ p.image.url }}" alt="" loading="lazy"></div>{% endif %}
+  <time datetime="{{ p.published_at|date:'c' }}">{{ p.published_at|date:"j F Y" }}</time>
+  <h3>{{ p.title }}</h3>
+  <p>{{ p.excerpt|truncatewords:30 }}</p>
+  <span class="link-arrow">Read more <svg><use href="#i-arrow"/></svg></span>
+</a>

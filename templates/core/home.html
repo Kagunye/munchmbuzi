@@ -1,0 +1,313 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}<link rel="preload" as="image" href="{% static 'img/mbuzi-leg.jpg' %}">{% endblock %}
+
+{% block content %}
+  {# Pennant, as on the original mbuzimunch.com: rises over the header at the right edge #}
+  <aside class="pennant" aria-label="Music and opening hours">
+    <div class="pennant__body">
+      <div class="pennant__player">
+        <button type="button" class="pennant__play" data-music-control aria-label="Play music" aria-pressed="false">
+          <svg class="ico-play" viewBox="0 0 24 24" fill="currentColor"><path d="M5 3.5v17L21 12z"/></svg>
+          <svg class="ico-pause" viewBox="0 0 24 24" fill="currentColor"><path d="M5 3h5v18H5zM14 3h5v18h-5z"/></svg>
+        </button>
+        <div class="pennant__bar" role="progressbar" aria-label="Music progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span></span></div>
+      </div>
+      <div class="pennant__socials">
+        {% for s in social_links %}<a href="{{ s.url }}" target="_blank" rel="noopener" aria-label="{{ s.name }}"><svg><use href="#i-{{ s.icon }}"/></svg></a>{% endfor %}
+      </div>
+      <p class="pennant__title">W E &nbsp;A R E<br>O P E N</p>
+      <p class="pennant__hours">7 days a week<br>10:00-22:00<br><span>-</span><br>Golf Park<br>07:00 - 23.00</p>
+    </div>
+  </aside>
+<section class="hero" aria-label="Welcome">
+  <div class="hero__slides" aria-hidden="true">
+    <div class="hero__slide is-active" style="background-image:url('{% static 'img/mbuzi-leg.jpg' %}')"></div>
+    <div class="hero__slide" style="background-image:url('{% static 'img/tbone-fries.jpg' %}')"></div>
+    <div class="hero__slide" style="background-image:url('{% static 'img/chicken-platter.jpg' %}')"></div>
+    <div class="hero__slide" style="background-image:url('{% static 'img/tilapia-platter.jpg' %}')"></div>
+  </div>
+  <div class="container">
+    <div class="hero__content">
+      <div class="hero__badge"><span>4 branches</span> Nairobi · Naivasha <b class="hero__stars" aria-label="5 star reviews">★★★★★</b></div>
+      <h1>Kenya's finest <em>Nyama Choma</em>, flame grilled.</h1>
+      <p class="lead">Free-range mbuzi farmed by the Maasai, organic kuku and beef, and fresh tilapia from Lake Victoria, infused with our secret blend of herbs and sauces. Come and dine.</p>
+      <div class="btn-row">
+        <a href="{% url 'core:book' %}" class="btn"><svg><use href="#i-calendar"/></svg> Book a table</a>
+        <a href="{% url 'core:menu' %}" class="btn btn--ghost">View the menu <svg><use href="#i-arrow"/></svg></a>
+      </div>
+    </div>
+  </div>
+  <div class="hero__dots" role="tablist" aria-label="Slides">
+    <button class="is-active" aria-label="Slide 1"></button><button aria-label="Slide 2"></button><button aria-label="Slide 3"></button><button aria-label="Slide 4"></button>
+  </div>
+</section>
+
+<section class="section--red branch-bar torn-top" aria-label="Our branches">
+  <div class="container branch-bar__grid">
+    {% for b in branches %}
+      <a href="{% url 'core:branches' %}#{{ b.slug }}">
+        <b>{{ b.name }}{% if b.is_new %}<span class="badge-new">New</span>{% endif %}</b>
+        {{ b.phone }}
+        <span>{{ b.city }}</span>
+      </a>
+    {% endfor %}
+  </div>
+</section>
+<div class="kitenge-band" aria-hidden="true"></div>
+
+<section class="section">
+  <div class="container split">
+    <div class="scatter reveal">
+      <figure class="print"><div class="film"><img src="{% static 'img/mbuzi-leg.jpg' %}" alt="Flame-grilled mbuzi leg on a wooden board" loading="lazy"></div><figcaption class="print--plain">Mbuzi leg, fresh off the grill</figcaption></figure>
+      <figure class="print"><div class="film"><img src="{% static 'img/wraps-fries.jpg' %}" alt="Choma wraps with fries and dips" loading="lazy"></div><figcaption class="print--plain">Choma wraps &amp; chips</figcaption></figure>
+      <div class="postmark"><span><b>100%</b>FREE RANGE<small>· MBUZI ·</small></span></div>
+    </div>
+    <div class="reveal reveal-delay-1">
+      <span class="eyebrow">Feeling hungry?</span>
+      <h2>Come and dine</h2>
+      <p class="lead">We serve a variety of delicious flame-grilled meats: chicken, beef and goat from sustainable and organic suppliers, and free-range fresh fish (tilapia) from Lake Victoria. All our food is professionally butchered.</p>
+      <p>Before being flame grilled, our T-bones, chickens, ribs and legs are infused in Mbuzi Munch's secret blend of herbs and sauces for an authentic taste of the Kenyan national dish.</p>
+      <ul class="typed-list">
+        <li><b>≤ 13 kg</b><span>For extra tenderness we serve younger animals. For the goats this means up to a year old.</span></li>
+        <li><b>Maasai</b><span>The goat is completely free range and farmed by the Maasai.</span></li>
+        <li><b>L. Victoria</b><span>Free-range fresh tilapia, fried or fricassee.</span></li>
+        <li><b>7 days</b><span>We are open 10:00 – 22:00. Golf Park from 07:00.</span></li>
+      </ul>
+      <a href="{% url 'core:about' %}" class="link-arrow">Read our story <svg><use href="#i-arrow"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<section class="section section--paper2 torn-top">
+  <div class="container split">
+    <div class="reveal">
+      <span class="eyebrow">Karibu mezani · Welcome to the table</span>
+      <h2>Nyama tastes better together</h2>
+      <p class="lead">Platters for sharing, a table full of friends and family, and plenty of kachumbari to go round. That's Mbuzi Munch.</p>
+      <a href="{% url 'core:events' %}" class="link-arrow">Plan a feast for your group <svg><use href="#i-arrow"/></svg></a>
+    </div>
+    {% include "partials/art_panel.html" with src="img/art/the-feast.jpg" frame="kitenge" title="The Feast" alt="Painting of a community sharing a long outdoor table of food" %}
+  </div>
+</section>
+
+<div class="marquee section--black" aria-hidden="true">
+  <div class="marquee__track">
+    {% for i in "12" %}<span>MBUZI</span><span>KUKU</span><span>NYAMA CHOMA</span><span>TILAPIA</span><span>T-BONE</span><span>UGALI</span><span>KACHUMBARI</span>{% endfor %}
+  </div>
+</div>
+
+<section class="section section--paper2 torn-top">
+  <div class="container">
+    <div class="section-head center">
+      <span class="eyebrow">O u r &nbsp; m e n u</span>
+      <h2>Not just for Mbuzi lovers</h2>
+      <p class="lead">Grilled to order: medium, rare or well done. Just tell your waiter how you like it.</p>
+    </div>
+  </div>
+  {# One line of circular dishes sliding right to left; the list is repeated once so the loop is seamless #}
+  <div class="dish-marquee" role="region" aria-label="Signature dishes">
+    <div class="dish-marquee__track">
+      {% for pass in "12" %}
+        {% for d in dishes %}
+          <figure class="dish-circle"{% if forloop.parentloop.last %} aria-hidden="true"{% endif %}>
+            <div class="dish-circle__img film"><img src="{{ d.image.url }}" alt="{% if not forloop.parentloop.last %}{{ d.name }}{% endif %}" loading="lazy"></div>
+            <figcaption>
+              <b>{{ d.name }}</b>
+              {% if d.price %}<span>KES {{ d.price }}</span>{% endif %}
+            </figcaption>
+          </figure>
+        {% endfor %}
+      {% endfor %}
+    </div>
+  </div>
+  <div class="container">
+    <div class="center" style="margin-top:48px">
+      <a href="{% url 'core:menu' %}" class="btn btn--outline">See the full menu <svg><use href="#i-arrow"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<section class="section section--black torn-top">
+  <div class="container">
+    <div class="section-head section-head--split">
+      <div><span class="eyebrow">From the bar</span><h2>Cocktails, shakes &amp; cold ones</h2></div>
+      <a href="{% url 'core:menu' %}#bar" class="btn btn--ghost">Drinks menu <svg><use href="#i-arrow"/></svg></a>
+    </div>
+    <div class="washline">
+      {% for d in drinks %}
+        <figure class="print">
+          <div class="film"><img src="{{ d.image.url }}" alt="{{ d.name }}" loading="lazy"></div>
+          <figcaption><b>{{ d.name }}</b>{% if d.price %}<span class="price">KES {{ d.price }}</span>{% endif %}</figcaption>
+        </figure>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section section--red torn-top">
+  <div class="container">
+    <div class="section-head center">
+      <div class="rule-stars">★★★★★</div>
+      <h2>What our guests say</h2>
+    </div>
+    <div class="quotes">
+      {% for r in reviews|slice:":4" %}
+        <figure class="quote reveal">
+          <div class="quote__stars" aria-label="{{ r.rating }} stars">{% for s in r.stars %}★{% endfor %}</div>
+          <blockquote>{{ r.text }}</blockquote>
+          <footer><b>- {{ r.author }}</b>{% if r.branch %}<small>{{ r.branch.name }}</small>{% endif %}</footer>
+        </figure>
+      {% endfor %}
+    </div>
+    <div class="quotes">
+      {% for r in reviews|slice:"4:" %}
+        <figure class="quote reveal">
+          <div class="quote__stars" aria-label="{{ r.rating }} stars">{% for s in r.stars %}★{% endfor %}</div>
+          <blockquote>{{ r.text }}</blockquote>
+          <footer><b>- {{ r.author }}</b>{% if r.branch %}<small>{{ r.branch.name }}</small>{% endif %}</footer>
+        </figure>
+      {% endfor %}
+    </div>
+    <div class="center" style="margin-top:44px">
+      <a class="btn btn--white" href="https://www.tripadvisor.co.uk/Restaurant_Review-g12559418-d19866300-Reviews-Mbuzi_Munch_Galleria-Karen_Nairobi.html" target="_blank" rel="noopener"><svg><use href="#i-tripadvisor"/></svg> More on TripAdvisor</a>
+    </div>
+  </div>
+</section>
+
+<section class="section section--black torn-top">
+  <div class="container">
+    <div class="section-head section-head--split">
+      <div>
+        <span class="eyebrow">Reels · @mbuzi_munch</span>
+        <h2>Watch the flame</h2>
+        <p class="lead">Straight from our Instagram. Tap the speaker for sound.</p>
+      </div>
+      <a href="https://www.instagram.com/mbuzi_munch/reels/" target="_blank" rel="noopener" class="btn btn--ghost"><svg><use href="#i-instagram"/></svg> More reels</a>
+    </div>
+    {% include "partials/reels.html" %}
+  </div>
+</section>
+
+<section class="kitenge-art kitenge-art--mural">
+  <div class="container">
+    <div class="fabric-tag reveal">
+      <span class="eyebrow">Step inside</span>
+      <h2>The Mbuzi Munch Experience</h2>
+      <p>From the Maasai pastures to the fire, build your own plate on a vintage Mbuzi slip, and see how an old bottle becomes your glass of iced tea.</p>
+      <div class="btn-row" style="justify-content:center">
+        <a href="{% url 'core:experience' %}" class="btn">Begin the experience <svg><use href="#i-arrow"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="kitenge-band" aria-hidden="true"></div>
+
+<section class="delivery section">
+  <img class="delivery__poster" src="{% static 'img/grill.jpg' %}" alt="" aria-hidden="true">
+  <video muted loop playsinline preload="none" poster="{% static 'img/grill.jpg' %}" data-lazy aria-hidden="true">
+    <source data-src="{% static 'video/hero-360p.mp4' %}" type="video/mp4">
+  </video>
+  <div class="container">
+    <div style="max-width:660px">
+      <span class="eyebrow" style="color:var(--red)">Takeaway &amp; delivery</span>
+      <h2>Wrap up your day with us</h2>
+      <p class="lead" style="color:rgba(255,255,255,.86)">Your favourite flame-grilled dishes are also available for takeaway and can be delivered straight to your front door.</p>
+      <div class="partners">
+        {% for p in delivery_partners %}
+          <a class="partner" href="{{ p.url }}" target="_blank" rel="noopener">
+            <img src="{% static p.logo %}" alt="" loading="lazy">
+            <span><b>{{ p.name }}</b><small>Take me home →</small></span>
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head center">
+      <span class="eyebrow">★★ Our branches ★★</span>
+      <h2>Four branches, one flame</h2>
+    </div>
+    <div class="stamps">
+      {% for b in branches %}
+        <article class="reveal">
+          <div class="stamp-wrap">
+            <div class="stamp">
+              {% if b.is_new %}<span class="stamp__value">New</span>{% endif %}
+              <div class="film">{% if b.image %}<img src="{{ b.image.url }}" alt="Mbuzi Munch {{ b.name }}" loading="lazy">{% endif %}</div>
+              <div class="stamp__label">{{ b.name }}<small>{{ b.city }}</small></div>
+            </div>
+          </div>
+          <div class="branch-meta">
+            {{ b.area }}<br>
+            Sun–Thu {{ b.hours_weekday }} · Fri–Sat {{ b.hours_weekend }}<br>
+            <a href="tel:{{ b.phone_link }}">{{ b.phone }}</a>
+            <div class="btn-row"><a href="{% url 'core:book' %}?branch={{ b.slug }}" class="btn btn--sm">Book</a><a href="{% url 'core:branches' %}#{{ b.slug }}" class="btn btn--sm btn--outline">Details</a></div>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="banner">
+  {% include "partials/photo_slide.html" with photos=party_photos slide_class="photo-slide--banner" %}
+  <div class="container">
+    <span class="free-tag">Groups of 20+ · No charge for the venue</span>
+    <h2>Looking for a private party venue?</h2>
+    <p>Ask for The Sundowner Bar at MM Golf Park, overlooking Ngong Racecourse. Birthdays, team days and your Christmas bash.</p>
+    <div class="btn-row">
+      <a href="{% url 'core:events' %}" class="btn btn--white">Plan your event <svg><use href="#i-arrow"/></svg></a>
+      <a href="tel:+254713372712" class="btn btn--ghost"><svg><use href="#i-phone"/></svg> Call Hillary</a>
+    </div>
+  </div>
+</section>
+
+<section class="section section--paper2 torn-top" id="book">
+  <div class="container split">
+    <div>
+      <span class="eyebrow">Booking information</span>
+      <h2>Save your seat at the grill</h2>
+      <p class="lead">Tell us when you're coming and how many. The branch will confirm by phone. Walk-ins are always welcome too.</p>
+      <ul class="typed-list">
+        <li><b>Sun – Thu</b><span>10:00 – 22:00</span></li>
+        <li><b>Fri – Sat</b><span>10:00 – 23:00</span></li>
+        <li><b>Golf Park</b><span>Opens at 07:00 for breakfast</span></li>
+      </ul>
+    </div>
+    <div class="reveal">{% include "partials/booking_form.html" with compact=True %}</div>
+  </div>
+</section>
+
+{% if posts %}
+<section class="section">
+  <div class="container">
+    <div class="section-head section-head--split">
+      <div><span class="eyebrow">Extra! Extra!</span><h2>News from the grill</h2></div>
+      <a href="{% url 'core:news' %}" class="btn btn--outline">All news <svg><use href="#i-arrow"/></svg></a>
+    </div>
+    <div class="post-grid">
+      {% for p in posts %}{% include "partials/post_card.html" %}{% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<section class="section--tight" style="padding-bottom:0">
+  <div class="container section-head section-head--split" style="margin-bottom:28px">
+    <div><span class="eyebrow">@mbuzi_munch</span><h2>Follow · Like · Share</h2></div>
+    <a href="https://www.instagram.com/mbuzi_munch/" target="_blank" rel="noopener" class="btn btn--outline"><svg><use href="#i-instagram"/></svg> Follow on Instagram</a>
+  </div>
+  <div class="contact-sheet">
+    <div class="insta">
+      {% for src, alt in instagram %}
+        <a href="https://www.instagram.com/mbuzi_munch/" target="_blank" rel="noopener" aria-label="{{ alt }} on Instagram"><span class="film"><img src="{% static src %}" alt="{{ alt }}" loading="lazy"></span></a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

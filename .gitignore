@@ -1,0 +1,20 @@
+# Python / local env
+.venv/
+__pycache__/
+*.pyc
+.env
+
+# Local database (contains bookings and test data)
+db.sqlite3
+
+# Build output
+/staticfiles/
+/staticfiles_build/
+.vercel
+
+# Uploaded CVs from the careers form are private
+/media/applications/
+/media/music/
+
+# Editor / tooling
+.claude/

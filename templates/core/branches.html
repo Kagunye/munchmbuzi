@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Our Branches | Mbuzi Munch Golf Park, Galleria, Buffalo Mall & Delamere{% endblock %}
+{% block description %}Find Mbuzi Munch at Golf Park Ngong Racecourse, Galleria Mall Langata Road, Buffalo Mall Naivasha and Delamere Farm Shops Naivasha. Opening hours, phone numbers and maps.{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="page-hero__bg" style="background-image:url('{% static 'img/branch-buffalo.jpg' %}')"></div>
+  <div class="container">
+    <div class="breadcrumbs"><a href="{% url 'core:home' %}">Home</a> / Branches</div>
+    <span class="eyebrow">Visit our branches</span>
+    <h1>Nairobi &amp; Naivasha</h1>
+    <p class="lead">Four places to sit back, breathe the fresh air and get stuck into the best nyama choma in Kenya. We are open 7 days a week.</p>
+  </div>
+</section>
+
+<section class="section section--paper2 torn-top" style="padding-top:40px">
+  <div class="container">
+    {% for b in branches %}
+      <article class="branch-row" id="{{ b.slug }}">
+        <div class="branch-row__media reveal{% if b.video %} branch-row__media--video{% endif %}">
+          <figure class="print">
+            <div class="film">{% if b.image %}<img src="{{ b.image.url }}" alt="Mbuzi Munch {{ b.name }}" loading="lazy">{% endif %}</div>
+            <figcaption class="print--plain">Mbuzi Munch · {{ b.name }}{% if b.is_new %} · New branch{% endif %}</figcaption>
+          </figure>
+          {% if b.video %}
+            <figure class="reel">
+              <video class="reel__video" muted loop playsinline preload="none" {% if b.video_poster %}poster="{{ b.video_poster.url }}"{% endif %} aria-label="Video from Mbuzi Munch {{ b.name }}">
+                <source data-src="{{ b.video.url }}" type="video/mp4">
+              </video>
+              <span class="reel__grain" aria-hidden="true"></span>
+              <button class="reel__sound" type="button" aria-label="Turn sound on" aria-pressed="false">
+                <svg class="ico-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M11 5 6 9H2v6h4l5 4V5zM23 9l-6 6M17 9l6 6"/></svg>
+                <svg class="ico-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M11 5 6 9H2v6h4l5 4V5zM15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>
+              </button>
+              <figcaption class="reel__caption">{{ b.name }} on Instagram</figcaption>
+            </figure>
+          {% endif %}
+        </div>
+        <div class="branch-row__body">
+          <span class="branch-area">{{ b.area }} · {{ b.city }}</span>
+          <h2>{{ b.name }}</h2>
+          {% if b.tagline %}<p class="text-red" style="margin:0 0 10px;font-weight:700">{{ b.tagline }}</p>{% endif %}
+          <p style="color:var(--sepia)">{{ b.description }}</p>
+          {% if b.slug == "golf-park" %}<p><a class="link-arrow" href="{% url 'core:events' %}#golf-park">Derby days &amp; golf buggy rental <svg><use href="#i-arrow"/></svg></a></p>{% endif %}
+          <table class="hours-table" aria-label="Opening hours">
+            <tr><td>Sun / Mon / Tue / Wed / Thu</td><td>{{ b.hours_weekday }}</td></tr>
+            <tr><td>Fri / Sat</td><td>{{ b.hours_weekend }}</td></tr>
+          </table>
+          <ul class="contact-lines">
+            <li><svg><use href="#i-phone"/></svg><a href="tel:{{ b.phone_link }}">{{ b.phone }}</a></li>
+            <li><svg><use href="#i-mail"/></svg><a href="mailto:{{ b.email }}">{{ b.email }}</a></li>
+          </ul>
+          {% if b.map_query %}
+            <iframe class="map" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Map of Mbuzi Munch {{ b.name }}"
+              src="https://maps.google.com/maps?q={{ b.map_query|urlencode }}&z=15&output=embed"></iframe>
+          {% endif %}
+          <div class="btn-row" style="margin-top:22px">
+            <a href="{% url 'core:book' %}?branch={{ b.slug }}" class="btn btn--sm"><svg><use href="#i-calendar"/></svg> Book here</a>
+            <a href="tel:{{ b.phone_link }}" class="btn btn--sm btn--outline"><svg><use href="#i-phone"/></svg> Call</a>
+            {% if b.map_query %}<a href="https://www.google.com/maps/search/?api=1&query={{ b.map_query|urlencode }}" target="_blank" rel="noopener" class="btn btn--sm btn--outline"><svg><use href="#i-directions"/></svg> Directions</a>{% endif %}
+          </div>
+        </div>
+      </article>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head section-head--split">
+      <div><span class="eyebrow">From our Instagram</span><h2>Life at Mbuzi Munch</h2></div>
+      <a href="https://www.instagram.com/mbuzi_munch/" target="_blank" rel="noopener" class="btn btn--outline"><svg><use href="#i-instagram"/></svg> @mbuzi_munch</a>
+    </div>
+    <div class="split split--top">
+      {% include "partials/photo_grid.html" with photos=life %}
+      {% include "partials/reels.html" with reels_class="reels--2" %}
+    </div>
+  </div>
+</section>
+
+<section class="section section--red torn-top">
+  <div class="container">
+    <div class="section-head center"><div class="rule-stars">★★★★★</div><h2>Loved at every branch</h2></div>
+    <div class="quotes">
+      {% for r in reviews|slice:":4" %}
+        <figure class="quote">
+          <div class="quote__stars">{% for s in r.stars %}★{% endfor %}</div>
+          <blockquote>{{ r.text }}</blockquote>
+          <footer><b>- {{ r.author }}</b>{% if r.branch %}<small>{{ r.branch.name }}</small>{% endif %}</footer>
+        </figure>
+      {% endfor %}
+    </div>
+    <div class="quotes">
+      {% for r in reviews|slice:"4:" %}
+        <figure class="quote">
+          <div class="quote__stars">{% for s in r.stars %}★{% endfor %}</div>
+          <blockquote>{{ r.text }}</blockquote>
+          <footer><b>- {{ r.author }}</b>{% if r.branch %}<small>{{ r.branch.name }}</small>{% endif %}</footer>
+        </figure>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

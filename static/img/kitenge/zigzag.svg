@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="28" viewBox="0 0 48 28">
+  <!-- Mbuzi Munch kitenge border band (original design) -->
+  <rect width="48" height="28" fill="#161412"/>
+  <rect y="0" width="48" height="3" fill="#e3a13b"/>
+  <rect y="25" width="48" height="3" fill="#e3a13b"/>
+  <path d="M0 20 12 8 24 20 36 8 48 20" fill="none" stroke="#ff2626" stroke-width="5" stroke-linejoin="miter"/>
+  <circle cx="12" cy="19" r="2.2" fill="#f3ede2"/>
+  <circle cx="36" cy="19" r="2.2" fill="#f3ede2"/>
+  <circle cx="0" cy="9" r="1.6" fill="#e3a13b"/><circle cx="24" cy="9" r="1.6" fill="#e3a13b"/><circle cx="48" cy="9" r="1.6" fill="#e3a13b"/>
+</svg>

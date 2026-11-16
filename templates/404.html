@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Page not found | Mbuzi Munch{% endblock %}
+{% block content %}
+<section class="section">
+  <div class="container center" style="max-width:640px">
+    <img src="{% static 'img/logo.png' %}" alt="" width="140" height="140" style="margin:0 auto 24px">
+    <span class="eyebrow">404</span>
+    <h1 style="font-size:clamp(2rem,5vw,3rem)">This goat wandered off</h1>
+    <p class="lead">We couldn't find that page. It may have moved when we rebuilt our website.</p>
+    <div class="btn-row" style="justify-content:center;margin-top:24px">
+      <a href="{% url 'core:home' %}" class="btn">Back home</a>
+      <a href="{% url 'core:menu' %}" class="btn btn--outline">See the menu</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

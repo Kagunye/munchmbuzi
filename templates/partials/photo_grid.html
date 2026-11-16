@@ -1,0 +1,9 @@
+{% load static %}
+<div class="photo-grid">
+  {% for src, caption in photos %}
+    <a class="photo-grid__item reveal" href="https://www.instagram.com/mbuzi_munch/" target="_blank" rel="noopener">
+      <span class="film"><img src="{% static src %}" alt="{{ caption }}" loading="lazy"></span>
+      <span class="photo-grid__cap">{{ caption }}</span>
+    </a>
+  {% endfor %}
+</div>

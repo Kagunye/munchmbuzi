@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Booking received | Mbuzi Munch{% endblock %}
+
+{% block content %}
+<section class="section section--paper2">
+  <div class="container">
+    <div class="slip success-card">
+      <div class="postmark"><span><b>✓</b>RECEIVED<small>· MBUZI MUNCH ·</small></span></div>
+      <span class="eyebrow">Asante sana!</span>
+      <h1 style="font-size:clamp(2rem,4vw,2.8rem)">We've got your booking request</h1>
+      {% if booking %}
+        <p class="lead" style="margin-inline:auto">The {{ booking.branch.name }} team will call {{ booking.phone }} to confirm your table.</p>
+        <div class="summary">
+          <div><span>Branch</span><b>{{ booking.branch.name }}</b></div>
+          <div><span>Date</span><b>{{ booking.date|date:"l j F Y" }}</b></div>
+          <div><span>Time</span><b>{{ booking.time|time:"H:i" }}</b></div>
+          <div><span>Guests</span><b>{{ booking.guests }}</b></div>
+          <div><span>Occasion</span><b>{{ booking.get_occasion_display }}</b></div>
+        </div>
+        <p>Need to change something? Call <a class="text-red" href="tel:{{ booking.branch.phone_link }}"><b>{{ booking.branch.phone }}</b></a>.</p>
+      {% else %}
+        <p class="lead" style="margin-inline:auto">The branch will call you shortly to confirm.</p>
+      {% endif %}
+      <div class="btn-row" style="justify-content:center;margin-top:24px">
+        <a href="{% url 'core:menu' %}" class="btn">Browse the menu</a>
+        <a href="{% url 'core:home' %}" class="btn btn--outline">Back home</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

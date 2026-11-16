@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static site_tags %}
+{% block title %}{{ post.title }} | Mbuzi Munch{% endblock %}
+{% block description %}{{ post.excerpt|truncatechars:160 }}{% endblock %}
+{% block og_title %}{{ post.title }}{% endblock %}
+{% block og_image %}{% if post.image %}{{ request.scheme }}://{{ request.get_host }}{{ post.image.url }}{% else %}{{ block.super }}{% endif %}{% endblock %}
+
+{% block content %}
+<section class="page-hero" style="padding-bottom:140px">
+  <div class="container" style="max-width:860px">
+    <div class="breadcrumbs"><a href="{% url 'core:home' %}">Home</a> / <a href="{% url 'core:news' %}">News</a></div>
+    <span class="eyebrow on-dark">{{ post.published_at|date:"j F Y" }}</span>
+    <h1 style="font-size:clamp(2rem,4.6vw,3.4rem)">{{ post.title }}</h1>
+  </div>
+</section>
+
+<article class="section" style="padding-top:0">
+  <div class="container">
+    {% if post.image %}
+      <div class="news-hero-img{% if post.image.name|slice:'-4:' == '.png' %} news-hero-img--contain{% endif %}"><img src="{{ post.image.url }}" alt=""></div>
+    {% endif %}
+    <div class="prose">
+      <p class="lead" style="color:var(--ink)">{{ post.excerpt }}</p>
+      {{ post.body|rich_text }}
+      <div class="btn-row" style="margin-top:40px">
+        <a href="{% url 'core:book' %}" class="btn">Book a table</a>
+        <a href="{% url 'core:news' %}" class="btn btn--outline">All news</a>
+      </div>
+    </div>
+  </div>
+</article>
+
+{% if others %}
+<section class="section section--paper2 torn-top">
+  <div class="container">
+    <div class="section-head"><span class="eyebrow">Keep reading</span><h2>More news</h2></div>
+    <div class="post-grid">{% for p in others %}{% include "partials/post_card.html" %}{% endfor %}</div>
+  </div>
+</section>
+{% endif %}
+{% endblock %}

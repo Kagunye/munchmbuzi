@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
+  <!-- Mbuzi Munch kitenge tile: concentric "fire" circles (original design) -->
+  <rect width="120" height="120" fill="#f3ede2"/>
+  <g fill="#ff2626"><circle cx="0" cy="0" r="22"/><circle cx="120" cy="0" r="22"/><circle cx="0" cy="120" r="22"/><circle cx="120" cy="120" r="22"/></g>
+  <g fill="#161412"><circle cx="0" cy="0" r="12"/><circle cx="120" cy="0" r="12"/><circle cx="0" cy="120" r="12"/><circle cx="120" cy="120" r="12"/></g>
+  <circle cx="60" cy="60" r="44" fill="#161412"/>
+  <circle cx="60" cy="60" r="37" fill="#ff2626"/>
+  <circle cx="60" cy="60" r="29" fill="#f3ede2"/>
+  <circle cx="60" cy="60" r="22" fill="#161412"/>
+  <circle cx="60" cy="60" r="14" fill="#e3a13b"/>
+  <circle cx="60" cy="60" r="6" fill="#ff2626"/>
+  <g fill="#f3ede2">
+    <circle cx="60" cy="19.5" r="2.4"/><circle cx="100.5" cy="60" r="2.4"/><circle cx="60" cy="100.5" r="2.4"/><circle cx="19.5" cy="60" r="2.4"/>
+    <circle cx="88.6" cy="31.4" r="2.4"/><circle cx="88.6" cy="88.6" r="2.4"/><circle cx="31.4" cy="88.6" r="2.4"/><circle cx="31.4" cy="31.4" r="2.4"/>
+  </g>
+  <g fill="#e3a13b"><path d="M60 0 66 8 60 16 54 8Z"/><path d="M60 104 66 112 60 120 54 112Z"/><path d="M0 60 8 54 16 60 8 66Z"/><path d="M104 60 112 54 120 60 112 66Z"/></g>
+</svg>

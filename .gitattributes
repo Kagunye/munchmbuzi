@@ -1,0 +1,7 @@
+# Keep Unix line endings so scripts run on Vercel's Linux build machines
+* text=auto eol=lf
+*.sh text eol=lf
+*.png binary
+*.jpg binary
+*.mp4 binary
+*.pdf binary

@@ -1,0 +1,7 @@
+.venv
+db.sqlite3
+__pycache__
+staticfiles
+staticfiles_build
+media/applications
+.claude

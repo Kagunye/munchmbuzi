@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Careers | Join the Mbuzi Munch Team{% endblock %}
+{% block description %}Job vacancies at Mbuzi Munch restaurants in Nairobi and Naivasha. Apply online.{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="page-hero__bg" style="background-image:url('{% static 'img/reels/reel-06.jpg' %}');background-position:center 30%"></div>
+  <div class="container">
+    <div class="breadcrumbs"><a href="{% url 'core:home' %}">Home</a> / Careers</div>
+    <span class="eyebrow">Job vacancies</span>
+    <h1>Join our team</h1>
+    <p class="lead">Love great food and making people happy? Grow with one of Kenya's favourite nyama choma restaurants.</p>
+  </div>
+</section>
+
+<section class="section section--paper2 torn-top">
+  <div class="container" style="max-width:960px">
+    <div class="section-head"><span class="eyebrow">Open positions</span><h2>We're hiring</h2></div>
+    {% for job in openings %}
+      <article class="job">
+        <div>
+          <span class="job__meta">{% if job.branch %}{{ job.branch.name }}{% else %}Nairobi &amp; Naivasha{% endif %} · Full time</span>
+          <h3>{{ job.title }}</h3>
+          <p>{{ job.summary }}</p>
+        </div>
+        <a href="?position={{ job.title|urlencode }}#apply" class="btn">Apply now <svg><use href="#i-arrow"/></svg></a>
+      </article>
+    {% empty %}
+      <article class="job"><div><h3>No open roles right now</h3><p>We're always happy to hear from great people. Send us your details below and we'll keep them on file.</p></div></article>
+    {% endfor %}
+  </div>
+</section>
+
+<div class="art-strip" role="img" aria-label="African mural artwork"></div>
+
+<section class="section section--red">
+  <div class="container">
+    <div class="section-head center"><span class="eyebrow">Why Mbuzi Munch</span><h2>More than a job</h2></div>
+    {% include "partials/reels.html" with reels_class="reels--2" reels_style="margin-bottom:56px" %}
+    <div class="perks">
+      <div class="perk"><svg><use href="#i-flame"/></svg><h3>Learn from the grill</h3><p>Master authentic nyama choma with our secret blend of herbs and sauces.</p></div>
+      <div class="perk"><svg><use href="#i-users"/></svg><h3>A team that cares</h3><p>Guests rave about our friendly staff, and it starts with how we treat each other.</p></div>
+      <div class="perk"><svg><use href="#i-pin"/></svg><h3>Four locations</h3><p>Opportunities in Nairobi and Naivasha, from the racecourse to the farm.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--paper2 torn-top" id="apply">
+  <div class="container" style="max-width:860px">
+    {% if messages %}{% for m in messages %}<div class="alert"><svg><use href="#i-check"/></svg>{{ m }}</div>{% endfor %}{% endif %}
+    <div class="section-head center"><span class="eyebrow">Apply</span><h2>Apply to work with us</h2></div>
+    <form method="post" enctype="multipart/form-data" class="slip" novalidate>
+      {% csrf_token %}
+      {{ form.website }}
+      <div class="slip__head"><b>Job application</b><span>Mbuzi Munch · HR</span></div>
+      <div class="form-grid">
+        {% include "partials/field.html" with field=form.first_name %}
+        {% include "partials/field.html" with field=form.last_name %}
+        {% include "partials/field.html" with field=form.email %}
+        {% include "partials/field.html" with field=form.phone %}
+        {% include "partials/field.html" with field=form.position %}
+        {% include "partials/field.html" with field=form.start_date %}
+        {% include "partials/field.html" with field=form.cv span=True %}
+        {% include "partials/field.html" with field=form.message span=True %}
+      </div>
+      <div class="form-foot">
+        <small>Your details are only used to assess your application.</small>
+        <button type="submit" class="btn">Submit <svg><use href="#i-arrow"/></svg></button>
+      </div>
+    </form>
+  </div>
+</section>
+{% endblock %}

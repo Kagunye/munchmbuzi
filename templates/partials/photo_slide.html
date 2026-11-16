@@ -1,0 +1,7 @@
+{% load static %}
+{# Photos sliding right to left; the set is repeated once so the loop is seamless #}
+<div class="photo-slide {{ slide_class }}" aria-hidden="true">
+  <div class="photo-slide__track">
+    {% for pass in "12" %}{% for src in photos %}<img src="{% static src %}" alt="" loading="lazy">{% endfor %}{% endfor %}
+  </div>
+</div>

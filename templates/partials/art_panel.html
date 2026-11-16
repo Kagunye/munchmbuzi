@@ -1,0 +1,6 @@
+{% load static %}
+{# frame: "kitenge" (print border), "beads" (Maasai beadwork border) or "float" (no frame, red offset block) #}
+<figure class="art-panel art-panel--{{ frame|default:'kitenge' }}{% if wide %} art-panel--wide{% endif %} reveal">
+  <div class="art-panel__frame"><img src="{% static src %}" alt="{{ alt }}" loading="lazy"></div>
+  <figcaption class="art-panel__label"><b>{{ title }}</b>{% if note %}<span>{{ note }}</span>{% endif %}</figcaption>
+</figure>

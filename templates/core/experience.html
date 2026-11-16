@@ -1,0 +1,248 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}The Mbuzi Munch Experience | From Pasture to Plate{% endblock %}
+{% block description %}Step inside Mbuzi Munch: free-range Maasai goats, our secret blend, the fire, build your own plate, and the recycled glassware that tells our story.{% endblock %}
+
+{% block content %}
+{# Chapter progress (desktop) #}
+<nav class="xp-progress" aria-label="Experience chapters">
+  <a href="#xp-pasture" data-ch="xp-pasture"><span>I</span><em>The pasture</em></a>
+  <a href="#xp-blend" data-ch="xp-blend"><span>II</span><em>Secret blend</em></a>
+  <a href="#xp-fire" data-ch="xp-fire"><span>III</span><em>The fire</em></a>
+  <a href="#xp-plate" data-ch="xp-plate"><span>IV</span><em>Your plate</em></a>
+  <a href="#xp-recycle" data-ch="xp-recycle"><span>V</span><em>Bottle to glass</em></a>
+  <a href="#xp-times" data-ch="xp-times"><span>VI</span><em>Good times</em></a>
+</nav>
+
+<section class="xp-intro">
+  <img class="delivery__poster" src="{% static 'img/grill.jpg' %}" alt="" aria-hidden="true">
+  <video class="xp-intro__video" muted loop playsinline autoplay preload="metadata" poster="{% static 'img/grill.jpg' %}" aria-hidden="true">
+    <source src="{% static 'video/hero-360p.mp4' %}" type="video/mp4">
+  </video>
+  <canvas class="embers" aria-hidden="true"></canvas>
+  <div class="container xp-intro__inner">
+    <img class="xp-intro__logo" src="{% static 'img/logo.png' %}" alt="Mbuzi Munch" width="150" height="150">
+    <span class="eyebrow">Karibu · Welcome to</span>
+    <h1 class="xp-type" data-type="M B U Z I &nbsp; M U N C H">M B U Z I &nbsp; M U N C H</h1>
+    <p class="lead">Good food ✶ great times. The taste of Kenya, from the pasture to your plate. Put the record on and scroll.</p>
+    <div class="btn-row" style="justify-content:center">
+      <button type="button" class="btn" data-play-music data-music-control><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg> Put the record on</button>
+      <button type="button" class="btn btn--ghost" data-vintage-toggle data-label-off="See it in vintage" data-label-on="Back to clean look" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="20" height="14" rx="2"/><circle cx="12" cy="13" r="4"/><path d="M7 6l2-3h6l2 3"/></svg> <span class="btn-label">See it in vintage</span></button>
+      <a href="#xp-pasture" class="btn btn--ghost">Begin the experience ↓</a>
+    </div>
+  </div>
+  <div class="kitenge-band kitenge-band--bottom" aria-hidden="true"></div>
+</section>
+
+{# I · The pasture #}
+<section class="section section--paper2 xp-chapter" id="xp-pasture">
+  <div class="container split">
+    <div class="reveal">
+      <span class="xp-num">Chapter I</span>
+      <h2>The pasture</h2>
+      <p class="lead">All our goats graze free range and are compassionately raised. The goat is completely free range and farmed by the Maasai.</p>
+      <p>We only serve young animals, up to a year old with a carcass weight of around 13 kg, guaranteeing the fresh flavour and tenderness of the meat. Chicken and beef come from sustainable and organic suppliers, and our free-range tilapia is fresh from Lake Victoria.</p>
+      <p>At Delamere, the model farm next door supplies vegetables, herbs and ethically raised goats, so ingredients arrive at the kitchen within minutes.</p>
+    </div>
+    <div class="scatter reveal reveal-delay-1">
+      <figure class="print"><div class="film"><img src="{% static 'img/branch-delamere.jpg' %}" alt="Mbuzi Munch Delamere, beside the model farm" loading="lazy"></div><figcaption class="print--plain">Delamere · steps from the farm</figcaption></figure>
+      <figure class="print"><div class="film"><img src="{% static 'img/tilapia-platter.jpg' %}" alt="Whole tilapia from Lake Victoria" loading="lazy"></div><figcaption class="print--plain">Fresh from Lake Victoria</figcaption></figure>
+      <div class="postmark"><span><b>≤13kg</b>YOUNG &amp;<small>TENDER</small></span></div>
+    </div>
+  </div>
+</section>
+
+<div class="kitenge-band" aria-hidden="true"></div>
+
+{# II · The secret blend #}
+<section class="section xp-chapter" id="xp-blend">
+  <div class="container split">
+    <div class="reveal">
+      <span class="xp-num">Chapter II</span>
+      <h2>The secret blend</h2>
+      <p class="lead">Before the meat is barbecued, our T-bones, chickens, ribs and legs are infused in Mbuzi Munch's secret blend.</p>
+      <p>Tap each jar to add it to the blend.</p>
+      <div class="spice-rack" role="group" aria-label="Add to the secret blend">
+        <button type="button" class="jar" data-spice="Herbs"><span class="jar__lid"></span><span class="jar__body"><b>Herbs</b></span></button>
+        <button type="button" class="jar" data-spice="Spices"><span class="jar__lid"></span><span class="jar__body"><b>Spices</b></span></button>
+        <button type="button" class="jar" data-spice="Sauces"><span class="jar__lid"></span><span class="jar__body"><b>Sauces</b></span></button>
+        <button type="button" class="jar" data-spice="Flavours"><span class="jar__lid"></span><span class="jar__body"><b>Flavours</b></span></button>
+      </div>
+      <div class="blend-meter" aria-hidden="true"><span></span></div>
+      <p class="blend-msg" aria-live="polite">The blend is waiting…</p>
+    </div>
+    <div class="reveal reveal-delay-1 kitenge-frame">
+      <div class="film" style="aspect-ratio:4/3"><img src="{% static 'img/samosa-platter.jpg' %}" alt="Sauces, dips and grilled melts on a board" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+{# III · The fire #}
+<section class="section section--black xp-chapter xp-fire torn-top" id="xp-fire">
+  <canvas class="embers" aria-hidden="true"></canvas>
+  <div class="container split">
+    <div class="reveal">
+      <span class="xp-num">Chapter III</span>
+      <h2>The fire</h2>
+      <p class="lead">Every grilled meat dish is prepared to order. So, how would you like yours?</p>
+      <div class="doneness" role="radiogroup" aria-label="How would you like it cooked?">
+        <button type="button" role="radio" aria-checked="false" data-done="Rare">Rare</button>
+        <button type="button" role="radio" aria-checked="true" data-done="Medium" class="is-on">Medium</button>
+        <button type="button" role="radio" aria-checked="false" data-done="Well done">Well done</button>
+      </div>
+      <p class="done-msg" aria-live="polite">Medium. Just let your waitress know, and choose your preferred sauce.</p>
+      <p style="color:rgba(255,255,255,.75)">Deluxe dishes are finished off in the pan with onions &amp; gravy.</p>
+    </div>
+    <div class="reveal reveal-delay-1">
+      <figure class="print xp-steak" style="--r:2deg"><div class="film"><img src="{% static 'img/tbone-fries.jpg' %}" alt="T-bone steak with chips" loading="lazy"></div><figcaption class="print--plain xp-steak__cap">T-Bone · Medium</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<div class="kitenge-band" aria-hidden="true"></div>
+
+{# IV · Your plate #}
+<section class="section section--paper2 xp-chapter" id="xp-plate">
+  <div class="container">
+    <div class="section-head center">
+      <span class="xp-num">Chapter IV</span>
+      <h2>Build your plate</h2>
+      <p class="lead">Pick your nyama, a side and a drink. Real menu prices, printed on a real Mbuzi Munch slip.</p>
+    </div>
+    <div class="builder">
+      <div class="builder__choices">
+        <fieldset class="choice-group" data-group="nyama">
+          <legend>1 · Choose your nyama</legend>
+          <div class="choice-row">
+            {% for o in builder.nyama %}
+              <label class="tag-choice">
+                <input type="radio" name="nyama" value="{{ o.id }}" data-label="{{ o.label }}" data-price="{{ o.price }}" data-img="{{ o.img }}" data-serves="{{ o.serves }}" {% if forloop.first %}checked{% endif %}>
+                <span>{% if o.img %}<img src="{{ o.img }}" alt="" loading="lazy">{% endif %}<b>{{ o.label }}</b><small>KES {{ o.price }}{% if o.serves %} · {{ o.serves }}{% endif %}</small></span>
+              </label>
+            {% endfor %}
+          </div>
+        </fieldset>
+        <fieldset class="choice-group" data-group="side">
+          <legend>2 · Add a side</legend>
+          <div class="choice-row choice-row--chips">
+            {% for o in builder.side %}
+              <label class="tag-choice tag-choice--chip">
+                <input type="radio" name="side" value="{{ o.id }}" data-label="{{ o.label }}" data-price="{{ o.price }}" {% if forloop.first %}checked{% endif %}>
+                <span><b>{{ o.label }}</b><small>KES {{ o.price }}</small></span>
+              </label>
+            {% endfor %}
+          </div>
+        </fieldset>
+        <fieldset class="choice-group" data-group="drink">
+          <legend>3 · Something to drink</legend>
+          <div class="choice-row">
+            {% for o in builder.drink %}
+              <label class="tag-choice">
+                <input type="radio" name="drink" value="{{ o.id }}" data-label="{{ o.label }}" data-price="{{ o.price }}" data-img="{{ o.img }}" {% if forloop.first %}checked{% endif %}>
+                <span>{% if o.img %}<img src="{{ o.img }}" alt="" loading="lazy">{% endif %}<b>{{ o.label }}</b><small>KES {{ o.price }}</small></span>
+              </label>
+            {% endfor %}
+          </div>
+        </fieldset>
+      </div>
+
+      <aside class="receipt-wrap">
+        <div class="receipt" aria-live="polite">
+          <img src="{% static 'img/logo.png' %}" alt="" width="64" height="64">
+          <div class="receipt__brand">MBUZI MUNCH</div>
+          <div class="receipt__sub">THE TASTE OF KENYA</div>
+          <div class="receipt__meta"><span>Slip No. <b class="r-no">0001</b></span><span class="r-date"></span></div>
+          <div class="receipt__rule"></div>
+          <div class="receipt__lines"></div>
+          <div class="receipt__rule"></div>
+          <div class="receipt__total"><span>TOTAL</span><b>KES <span class="r-total">0</span></b></div>
+          <div class="receipt__note">Cooked: <span class="r-done">Medium</span></div>
+          <div class="receipt__rule receipt__rule--stars">★ ★ ★ ★ ★</div>
+          <div class="receipt__thanks">ASANTE SANA!<br>Let's meat again soon</div>
+        </div>
+        <div class="btn-row receipt__actions">
+          <a href="{% url 'core:book' %}" class="btn" data-book-plate><svg><use href="#i-calendar"/></svg> Book this feast</a>
+          <button type="button" class="btn btn--outline" data-reprint>Reprint slip</button>
+        </div>
+        <p class="receipt__fine">Prices from our menu board, all branches. Order at your table or for delivery on Bolt Food, Glovo or Uber Eats.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+{# V · Bottle to glass #}
+<section class="section xp-chapter xp-recycle torn-top" id="xp-recycle">
+  <div class="container split">
+    <div class="reveal">
+      <span class="xp-num">Chapter V</span>
+      <h2>From bottle to glass</h2>
+      <p class="lead">Your iced tea is served in a glass that used to be a bottle. Slide to see it change.</p>
+      <div class="bottle-stage">
+        <svg class="bottle-svg" viewBox="0 0 200 260" role="img" aria-label="A bottle turning into a drinking glass">
+          <defs>
+            <linearGradient id="glassG" x1="0" x2="1"><stop offset="0" stop-color="#7fb08a" stop-opacity=".55"/><stop offset=".45" stop-color="#cfe6d2" stop-opacity=".35"/><stop offset="1" stop-color="#5d8f69" stop-opacity=".6"/></linearGradient>
+            <linearGradient id="teaG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c65a1e"/><stop offset="1" stop-color="#7a2a0c"/></linearGradient>
+          </defs>
+          <g class="bottle-neck">
+            <path d="M84 20h32v14c0 18 22 28 22 52v6H62v-6c0-24 22-34 22-52z" fill="url(#glassG)" stroke="#3d6b48" stroke-width="2.5"/>
+            <rect x="82" y="10" width="36" height="12" rx="2" fill="#ff2626"/>
+          </g>
+          <line class="cut-line" x1="48" y1="94" x2="152" y2="94" stroke="#ff2626" stroke-width="2.5" stroke-dasharray="7 6"/>
+          <g class="bottle-body">
+            <rect class="tea" x="66" y="150" width="68" height="94" fill="url(#teaG)" opacity="0"/>
+            <path d="M62 92h76v140c0 10-6 16-16 16H78c-10 0-16-6-16-16z" fill="url(#glassG)" stroke="#3d6b48" stroke-width="2.5"/>
+            <rect class="label" x="70" y="130" width="60" height="50" fill="#f3ede2" stroke="#161412" stroke-width="1.5"/>
+            <text class="label" x="100" y="152" text-anchor="middle" font-family="Courier New, monospace" font-size="9" font-weight="700" fill="#161412">OLD</text>
+            <text class="label" x="100" y="166" text-anchor="middle" font-family="Courier New, monospace" font-size="9" font-weight="700" fill="#161412">BOTTLE</text>
+            <path class="rim" d="M62 92h76" stroke="#cfe6d2" stroke-width="5" opacity="0"/>
+            <circle class="lime" cx="128" cy="100" r="14" fill="#9fcf4b" stroke="#5c8a23" stroke-width="3" opacity="0"/>
+          </g>
+        </svg>
+        <div class="bottle-steps" aria-hidden="true"><span class="is-on">1 · Old bottle</span><span>2 · Cut &amp; polish</span><span>3 · Your glass</span></div>
+        <label class="sr-only" for="bottle-range">Bottle to glass</label>
+        <input type="range" id="bottle-range" class="bottle-range" min="0" max="100" value="0">
+      </div>
+    </div>
+    <div class="reveal reveal-delay-1">
+      <ul class="typed-list recycle-list">
+        <li><b>Glassware</b><span>Our designers include recycled or upcycled material wherever possible, such as the glassware, which is made from bottles.</span></li>
+        <li><b>Containers</b><span>Our drinks and sauces are stored in recyclable containers.</span></li>
+        <li><b>Buy local</b><span>We operate a Buy Local, Buy Kenyan policy for equipment, supplies and services, using local artisans wherever possible.</span></li>
+        <li><b>Farm</b><span>At Delamere: minimal food miles, reduced waste and composting, woven into both kitchen and farm.</span></li>
+      </ul>
+      <figure class="print" style="--r:-2deg;max-width:300px;margin:34px auto 0"><div class="film" style="aspect-ratio:3/4"><img src="{% static 'img/drink-iced-tea.jpg' %}" alt="Iced tea in a glass made from a bottle" loading="lazy"></div><figcaption class="print--plain">Iced tea · KES 250</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<div class="art-strip" role="img" aria-label="African mural artwork"></div>
+
+{# VI · Good times #}
+<section class="section section--red xp-chapter xp-times torn-top" id="xp-times">
+  <div class="container">
+    <div class="section-head center">
+      <span class="xp-num">Chapter VI</span>
+      <h2>Good food ✶ great times</h2>
+      <p class="lead" style="margin-inline:auto">Fresh air and a lovely view of the golf course and horse racing at Golf Park. Pool, darts, table chess and family board games at Delamere. Good music at Galleria. Fast, friendly service at Buffalo Mall.</p>
+    </div>
+    <div class="split">
+      {% include "partials/reels.html" with reels_class="reels--2" %}
+      <div class="fabric-tag">
+        <span class="eyebrow">Find your table</span>
+        <ul class="tag-branches">
+          {% for b in branches %}
+            <li><a href="{% url 'core:book' %}?branch={{ b.slug }}"><b>{{ b.name }}</b><span>{{ b.area }}, {{ b.city }} · {{ b.phone }}</span></a></li>
+          {% endfor %}
+        </ul>
+        <div class="btn-row" style="justify-content:center;margin-top:18px">
+          <a href="{% url 'core:book' %}" class="btn"><svg><use href="#i-calendar"/></svg> Book a table</a>
+          <a href="{% url 'core:menu' %}" class="btn btn--outline">The menu</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="kitenge-band" aria-hidden="true"></div>
+{% endblock %}
+
+{% block scripts %}<script src="{% static 'js/experience.js' %}?v={{ asset_v }}" defer></script>{% endblock %}

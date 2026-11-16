@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Our Story | Mbuzi Munch – The Taste of Kenya{% endblock %}
+{% block description %}Free-range goats farmed by the Maasai, a secret blend of herbs and sauces, recycled glassware and a Buy Local, Buy Kenyan policy. This is Mbuzi Munch.{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="page-hero__bg" style="background-image:url('{% static 'img/chicken-platter.jpg' %}')"></div>
+  <div class="container">
+    <div class="breadcrumbs"><a href="{% url 'core:home' %}">Home</a> / Our story</div>
+    <span class="eyebrow">Welcome to</span>
+    <h1>M B U Z I &nbsp; M U N C H</h1>
+    <p class="lead">Good food ✶ great times. The taste of Kenya.</p>
+  </div>
+</section>
+
+<section class="section section--paper2 torn-top">
+  <div class="container split">
+    <div class="reveal">
+      <span class="eyebrow">How we do it</span>
+      <h2>From the Maasai pastures to your plate</h2>
+      <p class="lead">All our goats graze free range and are compassionately raised. We only serve young animals with a carcass weight of around 13 kg, thus guaranteeing the fresh flavour and tenderness of the meat.</p>
+      <p>Before the meat is barbequed, we add a special blend of herbs, spices, sauces and flavours for that authentic Kenyan Nyama Choma taste.</p>
+      <p>As all of our grilled meat dishes are prepared to order, please let your waitress know for beef or mbuzi how you would like it cooked: medium, rare or well done.</p>
+    </div>
+    <div class="scatter reveal reveal-delay-1">
+      <figure class="print"><div class="film"><img src="{% static 'img/mbuzi-leg.jpg' %}" alt="Grilled mbuzi leg" loading="lazy"></div><figcaption class="print--plain">Mbuzi leg deluxe</figcaption></figure>
+      <figure class="print"><div class="film"><img src="{% static 'img/drink-iced-tea.jpg' %}" alt="Iced tea in glassware made from bottles" loading="lazy"></div><figcaption class="print--plain">Glassware made from bottles</figcaption></figure>
+      <div class="postmark"><span><b>13kg</b>MAX<small>· CARCASS ·</small></span></div>
+    </div>
+  </div>
+</section>
+
+<div class="kitenge-band" aria-hidden="true"></div>
+<section class="section">
+  <div class="container">
+    <div class="section-head center"><span class="eyebrow">What we stand for</span><h2>Good food that does good</h2></div>
+    <div class="values">
+      <div class="value reveal"><svg><use href="#i-leaf"/></svg><h3>Free range, always</h3><p>Our goats are completely free range and farmed by the Maasai. At Delamere, much of our produce comes straight from the model farm next door.</p></div>
+      <div class="value reveal reveal-delay-1"><svg><use href="#i-recycle"/></svg><h3>Recycled &amp; upcycled</h3><p>With the exception of our state of the art kitchens, wherever possible our designers include recycled or upcycled material, such as our glassware made from bottles. Drinks and sauces are stored in recyclable containers.</p></div>
+      <div class="value reveal reveal-delay-2"><svg><use href="#i-heart"/></svg><h3>Buy local, buy Kenyan</h3><p>We operate a Buy Local, Buy Kenyan policy for equipment, supplies and services, using local artisans wherever possible.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--black torn-top">
+  <div class="container split">
+    <div class="reveal">
+      <span class="eyebrow">Buy local, buy Kenyan</span>
+      <h2>Made by local hands</h2>
+      <p class="lead">We operate a Buy Local, Buy Kenyan policy for equipment, supplies and services, using local artisans wherever possible.</p>
+      <p style="color:rgba(255,255,255,.8)">From the recycled-bottle glassware on your table to the fabrics, furniture and fittings around you, our designers work with Kenyan makers and recycled or upcycled materials wherever they can.</p>
+    </div>
+    {% include "partials/art_panel.html" with src="img/art/kitenge-tailor.jpg" frame="float" title="The Kitenge Tailor" alt="Photo of a tailor sewing kitenge fabric on a treadle sewing machine" %}
+  </div>
+</section>
+
+<section class="section section--paper2 torn-top">
+  <div class="container">
+    <div class="section-head center"><span class="eyebrow">On the grill</span><h2>Taste the difference</h2></div>
+    <div class="board">
+      {% for d in dishes %}
+        <figure class="print reveal">
+          <div class="film"><img src="{{ d.image.url }}" alt="{{ d.name }}" loading="lazy"></div>
+          <figcaption><b>{{ d.name }}</b>{% if d.price %}<span class="price">KES {{ d.price }}</span>{% endif %}<small>{{ d.description }}</small></figcaption>
+        </figure>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="banner">
+  <img class="banner__bg" src="{% static 'img/tbone-fries.jpg' %}" alt="" loading="lazy">
+  <div class="container">
+    <h2>Let's meat again soon</h2>
+    <p>Four branches across Nairobi and Naivasha, open seven days a week.</p>
+    <div class="btn-row"><a href="{% url 'core:book' %}" class="btn btn--white">Book a table</a><a href="{% url 'core:branches' %}" class="btn btn--ghost">Find a branch</a></div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% load static %}
+<div class="reels {{ reels_class }}"{% if reels_style %} style="{{ reels_style }}"{% endif %}>
+  {% for r in reels %}
+    <figure class="reel reveal {% cycle '' 'reveal-delay-1' 'reveal-delay-2' 'reveal-delay-3' %}">
+      <video class="reel__video" muted loop playsinline preload="none" poster="{% static r.poster %}" aria-label="{{ r.caption }}">
+        <source data-src="{% static r.video %}" type="video/mp4">
+      </video>
+      <span class="reel__grain" aria-hidden="true"></span>
+      <button class="reel__sound" type="button" aria-label="Turn sound on" aria-pressed="false">
+        <svg class="ico-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M11 5 6 9H2v6h4l5 4V5zM23 9l-6 6M17 9l6 6"/></svg>
+        <svg class="ico-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M11 5 6 9H2v6h4l5 4V5zM15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>
+      </button>
+      <figcaption class="reel__caption">{{ r.caption }}</figcaption>
+    </figure>
+  {% endfor %}
+</div>

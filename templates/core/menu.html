@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Menu | Mbuzi Munch – Nyama Choma, Kuku, Tilapia & Drinks{% endblock %}
+{% block description %}The full Mbuzi Munch menu with prices: mbuzi leg, nyama feast platter, kuku choma, T-bone, tilapia, burgers, wraps, breakfast, cocktails, wines and more.{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="page-hero__bg" style="background-image:url('{% static 'img/samosa-platter.jpg' %}')"></div>
+  <div class="container">
+    <div class="breadcrumbs"><a href="{% url 'core:home' %}">Home</a> / Menu</div>
+    <span class="eyebrow">Menu board · All branches</span>
+    <h1>Good food ✶ great times</h1>
+    <p class="lead">As all of our food is prepared with fresh ingredients and made specially for each order, some dishes can take a little longer, so please check with your waitress if you're in a hurry. Prices in KES.</p>
+    <div class="btn-row" style="margin-top:26px">
+      <a href="{% url 'core:book' %}" class="btn"><svg><use href="#i-calendar"/></svg> Book a table</a>
+      <a href="{% static menu_pdf %}" class="btn btn--ghost" target="_blank" rel="noopener"><svg><use href="#i-download"/></svg> Download PDF</a>
+    </div>
+  </div>
+</section>
+
+<div class="menu-tabs">
+  <div class="container menu-tabs__inner" role="tablist" aria-label="Menu sections">
+    {% for s in sections %}
+      <button class="tab{% if forloop.first %} is-active{% endif %}" role="tab" data-section="{{ s.key }}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" aria-controls="{{ s.key }}">{{ s.label }}</button>
+    {% endfor %}
+    <label class="menu-search">
+      <span class="sr-only">Search the menu</span>
+      <svg><use href="#i-search"/></svg>
+      <input type="search" id="menu-search" placeholder="Search: mbuzi, mojito…" autocomplete="off">
+    </label>
+  </div>
+</div>
+
+<section class="section" style="padding-top:64px">
+  <div class="container" style="max-width:1000px">
+    {% for s in sections %}
+      <div class="menu-section{% if forloop.first %} is-active{% endif %}" id="{{ s.key }}" role="tabpanel">
+        <h2 class="menu-title">{{ s.label }}</h2>
+        {% for c in s.categories %}
+          <div class="menu-cat">
+            <div class="menu-cat__label">{{ c.name }}{% if c.price_label %}<small>{{ c.price_label }}</small>{% endif %}</div>
+            <div class="menu-cat__items">
+              {% if c.note %}<p class="menu-cat__note">{{ c.note }}</p>{% endif %}
+              {% for item in c.items.all %}{% if item.is_available %}
+                <div class="menu-item" data-search="{{ item.name|lower }} {{ item.description|lower }} {{ c.name|lower }}">
+                  <div class="menu-item__row">
+                    <span class="menu-item__name">{{ item.name }}{% if item.is_vegetarian and s.key == 'mains' %}<span class="tag tag--veg">Veg</span>{% endif %}{% if item.is_spicy %}<span class="tag tag--hot">Hot</span>{% endif %}{% if item.serves %}<span class="tag tag--serves">{{ item.serves }}</span>{% endif %}</span>
+                    <span class="menu-item__dots" aria-hidden="true"></span>
+                    <span class="menu-item__price">{{ item.price }}/-</span>
+                  </div>
+                  {% if item.description %}<div class="menu-item__desc">{{ item.description }}</div>{% endif %}
+                </div>
+              {% endif %}{% endfor %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% endfor %}
+    <p class="menu-empty">No dishes match your search. Try “kuku”, “wrap” or “latte”.</p>
+
+    <div class="menu-note">
+      <div>
+        <h3 style="margin-bottom:6px">Let's meat again soon</h3>
+        <p>Follow us on social media for delivery options and deals. Order on Bolt Food, Glovo or Uber Eats, or call your nearest branch for takeaway.</p>
+      </div>
+      <div class="btn-row">
+        {% for p in delivery_partners %}<a href="{{ p.url }}" class="btn btn--sm btn--outline" target="_blank" rel="noopener">{{ p.name }}</a>{% endfor %}
+      </div>
+    </div>
+
+  </div>
+  <div class="art-strip" role="img" aria-label="African mural artwork" style="margin-top:60px"></div>
+  <div class="container" style="max-width:1000px">
+    <div class="section-head center" style="margin:60px 0 30px">
+      <span class="eyebrow">@mbuzi_munch</span>
+      <h2>As seen on Instagram</h2>
+    </div>
+    {% include "partials/photo_grid.html" with photos=insta_dishes %}
+  </div>
+</section>
+{% endblock %}

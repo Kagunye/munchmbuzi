@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Private Parties & Events | The Sundowner Bar at Mbuzi Munch Golf Park{% endblock %}
+{% block description %}Host your birthday, team day or Christmas bash at The Sundowner Bar, Mbuzi Munch Golf Park, Ngong Racecourse. No venue charge for groups of 20 or more. MM Catering for events, brunch and parties.{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  {% include "partials/photo_slide.html" with photos=party_photos slide_class="photo-slide--hero" %}
+  <div class="container">
+    <div class="breadcrumbs"><a href="{% url 'core:home' %}">Home</a> / Events</div>
+    <span class="eyebrow">Private parties &amp; events</span>
+    <h1>Looking for a private party venue?</h1>
+    <p class="lead">The Sundowner Bar at MM Golf Park: palm trees, open skies and views over Ngong Racecourse. Ideal for birthdays, corporate team days and your Christmas bash.</p>
+    <div class="btn-row" style="margin-top:26px">
+      <a href="{% url 'core:book' %}?occasion=private" class="btn"><svg><use href="#i-calendar"/></svg> Send an enquiry</a>
+      <a href="tel:+254713372712" class="btn btn--ghost"><svg><use href="#i-phone"/></svg> Call Hillary · 0713 372 712</a>
+    </div>
+  </div>
+</section>
+
+<section class="section section--paper2 torn-top">
+  <div class="container split">
+    <div class="reveal">
+      <span class="free-tag">For groups of 20 people or more · no charge for the venue</span>
+      <h2>Your crowd, our grill, the best view in Nairobi</h2>
+      <p class="lead">You only pay for the food and drinks your guests enjoy.</p>
+      <ul class="typed-list">
+        <li><b>20+</b><span>Guests and the venue is free</span></li>
+        <li><b>Platters</b><span>Nyama Feast platters, wraps, sides and a full bar</span></li>
+        <li><b>Outdoor</b><span>Terrace bar with umbrellas and heaters on the grass</span></li>
+      </ul>
+      <p>To book, ask for <b>‘The Sundowner Bar’</b> at MM Golf Park or call Hillary on <a class="text-red" href="tel:+254713372712"><b>0713 372 712</b></a>.</p>
+    </div>
+    <div class="reveal reveal-delay-1" style="padding:20px">
+      <figure class="print" style="--r:3deg"><div class="film" style="aspect-ratio:3/4"><img src="{% static 'img/events-poster.jpg' %}" alt="Mbuzi Munch poster: looking for a private party venue? For groups of 20 people or more there is no charge for the venue" loading="lazy" style="object-fit:contain;background:var(--red)"></div><figcaption class="print--plain">Ask for ‘The Sundowner Bar’ at MM Golf Park</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="section section--black torn-top">
+  <div class="container split">
+    <div class="reveal">
+      <span class="eyebrow">MM Catering</span>
+      <h2>Events · Brunch · Parties</h2>
+      <p class="lead">From intimate gatherings to big celebrations, we curate delicious catering experiences tailored to your event.</p>
+      <p style="color:rgba(255,255,255,.8)">Prices are curated according to your event, guest count and requirements.</p>
+      <div class="btn-row" style="margin-top:24px">
+        <a href="tel:+254790492307" class="btn"><svg><use href="#i-phone"/></svg> Enquiries · 0790 492 307</a>
+        <a href="{% url 'core:book' %}?occasion=private" class="btn btn--ghost">Send an enquiry</a>
+      </div>
+    </div>
+    {% include "partials/reels.html" with reels_class="reels--2" %}
+  </div>
+</section>
+
+<section class="section section--red torn-top">
+  <div class="container">
+    <div class="section-head center"><span class="eyebrow">Perfect for</span><h2>Every reason to celebrate</h2></div>
+    <div class="split" style="margin-bottom:56px">
+      {% include "partials/art_panel.html" with src="img/art/the-feast.jpg" frame="kitenge" title="The Feast" alt="Painting of a community sharing a long outdoor table of food" %}
+      {% include "partials/art_panel.html" with src="img/art/bass-player.jpg" frame="beads" title="The Bass Player" alt="Painting of a musician playing a bass guitar" %}
+    </div>
+    <div class="perks">
+      <div class="perk"><svg><use href="#i-heart"/></svg><h3>Birthdays &amp; family days</h3><p>Kid-friendly space, games and plenty of room to run around on the grass.</p></div>
+      <div class="perk"><svg><use href="#i-users"/></svg><h3>Corporate &amp; team events</h3><p>Team lunches, sundowners and end-of-year parties with sharing platters.</p></div>
+      <div class="perk"><svg><use href="#i-star"/></svg><h3>Your Christmas bash</h3><p>Book early for the festive season. Our Golf Park terrace fills up fast.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--paper2 torn-top" id="golf-park">
+  <div class="container">
+    <div class="section-head center"><span class="eyebrow">More at Golf Park</span><h2>Race days &amp; rounds of golf</h2></div>
+    <div class="extras">
+      <article class="extra reveal" id="derby">
+        {% include "partials/reels.html" with reels=derby_reels reels_class="reels--1" %}
+        <div class="extra__body">
+          <span class="eyebrow">Derby day</span>
+          <h3>Watch the races, eat like a winner</h3>
+          <p>Our Golf Park branch sits right on Ngong Racecourse. On race days the grill is fired up trackside, so you can follow the horses with a plate of nyama choma and a cold drink in hand.</p>
+          <div class="btn-row"><a href="{% url 'core:book' %}?branch=golf-park" class="btn btn--sm"><svg><use href="#i-calendar"/></svg> Book a race-day table</a></div>
+        </div>
+      </article>
+      <article class="extra reveal reveal-delay-1" id="buggy">
+        <div class="extra__poster"><img src="{% static 'img/buggy.jpg' %}" alt="Mbuzi Munch Golf Buggy Rental: 9 holes 1000 shillings, 18 holes 2000 shillings. To book call 0723 868 686" loading="lazy"></div>
+        <div class="extra__body">
+          <span class="eyebrow">Rent a golf buggy</span>
+          <h3>Golf Buggy Rental</h3>
+          <ul class="typed-list" style="margin:14px 0 18px">
+            <li><b>9 holes</b><span>KES 1,000</span></li>
+            <li><b>18 holes</b><span>KES 2,000</span></li>
+          </ul>
+          <div class="btn-row"><a href="tel:+254723868686" class="btn btn--sm"><svg><use href="#i-phone"/></svg> Book: 0723 868 686</a></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head center"><span class="eyebrow">From our events</span><h2>Good food ✶ great times</h2></div>
+    <div class="board">
+      {% for g in gallery %}<figure class="print"><div class="film" style="aspect-ratio:4/5"><img src="{% static g %}" alt="Mbuzi Munch event catering" loading="lazy"></div><figcaption class="print--plain">MM Catering</figcaption></figure>{% endfor %}
+    </div>
+    <div class="center" style="margin-top:56px">
+      <a href="{% url 'core:book' %}?occasion=private" class="btn">Enquire about your event <svg><use href="#i-arrow"/></svg></a>
+    </div>
+  </div>
+</section>
+{% endblock %}

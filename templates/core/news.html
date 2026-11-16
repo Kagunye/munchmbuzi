@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}News | Mbuzi Munch{% endblock %}
+{% block description %}New branches, new tech and what's cooking at Mbuzi Munch.{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="page-hero__bg" style="background-image:url('{% static 'img/branch-delamere.jpg' %}')"></div>
+  <div class="container">
+    <div class="breadcrumbs"><a href="{% url 'core:home' %}">Home</a> / News</div>
+    <span class="eyebrow">Extra! Extra!</span>
+    <h1>News from the grill</h1>
+    <p class="lead">New branches, new ways to order and everything happening at Mbuzi Munch.</p>
+  </div>
+</section>
+
+<section class="section section--paper2 torn-top">
+  <div class="container">
+    <div class="post-grid">
+      {% for p in posts %}{% include "partials/post_card.html" %}{% empty %}<p>No news yet. Check back soon!</p>{% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

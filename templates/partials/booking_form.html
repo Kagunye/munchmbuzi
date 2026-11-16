@@ -1,0 +1,21 @@
+<form method="post" action="{% url 'core:book' %}" class="slip" novalidate>
+  {% csrf_token %}
+  {{ form.website }}
+  <div class="slip__head"><b>Reservation</b><span>Mbuzi Munch · No. {% now "dmy" %}</span></div>
+  {% if form.non_field_errors %}<div class="form-errors">{% for e in form.non_field_errors %}{{ e }} {% endfor %}</div>{% endif %}
+  <div class="form-grid">
+    {% include "partials/field.html" with field=form.branch span=True %}
+    {% include "partials/field.html" with field=form.date %}
+    {% include "partials/field.html" with field=form.time %}
+    {% include "partials/field.html" with field=form.guests %}
+    {% include "partials/field.html" with field=form.occasion %}
+    {% include "partials/field.html" with field=form.name %}
+    {% include "partials/field.html" with field=form.phone %}
+    {% include "partials/field.html" with field=form.email span=True %}
+    {% if not compact %}{% include "partials/field.html" with field=form.notes span=True %}{% endif %}
+  </div>
+  <div class="form-foot">
+    <small>We'll call or text to confirm your table. For same-day bookings, calling the branch is fastest.</small>
+    <button type="submit" class="btn">Request booking <svg><use href="#i-arrow"/></svg></button>
+  </div>
+</form>

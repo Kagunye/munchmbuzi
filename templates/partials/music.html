@@ -1,0 +1,22 @@
+{% load static %}
+<div class="mm-music" id="mm-music"
+     data-src="{% if music_track %}{{ music_track.audio.url }}{% endif %}"
+     data-title="{% if music_track %}{{ music_track.title }}{% else %}Mbuzi Munch vibes{% endif %}"
+     data-artist="{% if music_track %}{{ music_track.artist }}{% else %}Kalimba &amp; drums groove{% endif %}">
+  <button class="mm-music__disc" type="button" aria-pressed="false" aria-label="Play Mbuzi Munch music">
+    <span class="mm-music__vinyl" aria-hidden="true">
+      <img src="{% static 'img/logo.png' %}" alt="" width="44" height="44">
+    </span>
+    <span class="mm-music__state" aria-hidden="true">
+      <svg class="ico-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg>
+      <svg class="ico-pause" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>
+    </span>
+  </button>
+  <div class="mm-music__panel" aria-live="polite">
+    <span class="mm-music__eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+    <span class="mm-music__text">
+      <b class="mm-music__title">Play the Mbuzi vibe</b>
+      <small class="mm-music__sub">Tap the goat for music</small>
+    </span>
+  </div>
+</div>

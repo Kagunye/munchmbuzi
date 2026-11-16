@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Book a Table | Mbuzi Munch Reservations{% endblock %}
+{% block description %}Reserve a table at Mbuzi Munch Golf Park, Galleria Mall, Buffalo Mall or Delamere Naivasha. Group bookings and private parties welcome.{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="page-hero__bg" style="background-image:url('{% static 'img/tbone-fries.jpg' %}')"></div>
+  <div class="container">
+    <div class="breadcrumbs"><a href="{% url 'core:home' %}">Home</a> / Book a table</div>
+    <span class="eyebrow">Booking information</span>
+    <h1>Book a table</h1>
+    <p class="lead">Pick your branch, date and time. We'll confirm by phone. For bookings today, calling the branch is the quickest way.</p>
+  </div>
+</section>
+
+<section class="section section--paper2 torn-top">
+  <div class="container split split--top">
+    <div>{% include "partials/booking_form.html" %}</div>
+    <aside class="section--black side-black">
+      <span class="eyebrow">Reservations</span>
+      <h3>Prefer to call?</h3>
+      <ul class="info-list" style="margin-top:12px">
+        {% for b in nav_branches %}
+          <li>
+            <span class="ico"><svg><use href="#i-phone"/></svg></span>
+            <div><b>{{ b.name }}</b><a href="tel:{{ b.phone_link }}">{{ b.phone }}</a> · <a href="mailto:{{ b.email }}">{{ b.email }}</a><br><span>{{ b.hours_weekday }} · Fri–Sat {{ b.hours_weekend }}</span></div>
+          </li>
+        {% endfor %}
+      </ul>
+      <p style="color:rgba(255,255,255,.72);margin:22px 0 0;font-size:.9rem">Planning something big? Groups of 20+ get The Sundowner Bar at Golf Park with no venue charge. <a href="{% url 'core:events' %}" style="color:var(--white);text-decoration:underline">See events</a>.</p>
+    </aside>
+  </div>
+</section>
+{% endblock %}
